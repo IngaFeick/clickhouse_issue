@@ -1,0 +1,42 @@
+# version: "3"
+networks:
+  clickhouse-network:
+    ipam:
+      config:
+        - subnet: 172.23.0.0/24
+
+services:
+  clickhouse-keeper1:
+    image: "clickhouse/clickhouse-keeper:24.8.7.41"
+    container_name: clickhouse-keeper1
+    hostname: clickhouse-keeper1
+    networks:
+      clickhouse-network:
+        ipv4_address: 172.23.0.14
+    volumes:
+      - ./configs/keeper_config1.xml:/etc/clickhouse-keeper/keeper_config.xml
+      - ./certificates/keeper1/:/etc/ssl/clickhouse-keeper/
+
+
+  clickhouse-keeper2:
+    image: "clickhouse/clickhouse-keeper:24.8.7.41"
+    container_name: clickhouse-keeper2
+    hostname: clickhouse-keeper2
+    networks:
+      clickhouse-network:
+        ipv4_address: 172.23.0.15
+    volumes:
+      - ./configs/keeper_config2.xml:/etc/clickhouse-keeper/keeper_config.xml
+      - ./certificates/keeper2/:/etc/ssl/clickhouse-keeper/
+
+
+  clickhouse-keeper3:
+    image: "clickhouse/clickhouse-keeper:24.9.1.3278"
+    container_name: clickhouse-keeper3
+    hostname: clickhouse-keeper3
+    networks:
+      clickhouse-network:
+        ipv4_address: 172.23.0.16
+    volumes:
+      - ./configs/keeper_config3.xml:/etc/clickhouse-keeper/keeper_config.xml
+      - ./certificates/keeper3/:/etc/ssl/clickhouse-keeper/
