@@ -2,10 +2,10 @@
 
 DIR="./certificates"
 
-# Generate Root CA cert:
+mkdir -p "${DIR}"
+
 openssl req -x509 -nodes -keyout "${DIR}/ca.key" -out "${DIR}/ca.pem" -days 365 -subj "/C=DE/ST=State/L=City/O=Company/OU=Unit/CN=Testcluster Root CA"
 
-mkdir -p "${DIR}"
 for node in 1 2 3; do
     mkdir "${DIR}/keeper${node}"
     cp "${DIR}/ca.pem" "${DIR}/keeper${node}/ca.pem"
